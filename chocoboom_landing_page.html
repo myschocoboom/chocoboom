@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChocoBoom | Chocotejas Artesanales</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8ef;
+      color: #35180b;
+    }
+    header {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 44px 20px;
+      background: radial-gradient(circle at top, #fff0d0, #fff8ef 55%, #f3dfc3);
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    header::before, header::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(231, 165, 27, .16);
+      filter: blur(5px);
+    }
+    header::before { left: -80px; top: 80px; }
+    header::after { right: -100px; bottom: 80px; background: rgba(70, 30, 12, .12); }
+    .hero { max-width: 920px; position: relative; z-index: 1; }
+    .logo-icon {
+      width: 132px;
+      height: 132px;
+      margin: 0 auto 22px;
+      border-radius: 30px;
+      background: linear-gradient(145deg, #7a3516, #2b1007);
+      position: relative;
+      box-shadow: 0 18px 40px rgba(58, 29, 15, .25);
+      transform: rotate(-8deg);
+    }
+    .logo-icon::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 22px;
+      border: 3px solid rgba(255,255,255,.14);
+    }
+    .logo-icon::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 44px;
+      height: 44px;
+      border-radius: 0 25px 0 28px;
+      background: linear-gradient(145deg, #ffd56a, #d99510);
+    }
+    h1 {
+      font-size: clamp(54px, 9vw, 112px);
+      line-height: .9;
+      letter-spacing: -4px;
+      margin-bottom: 18px;
+    }
+    h1 span { color: #e7a51b; }
+    .tagline {
+      font-size: clamp(20px, 3vw, 34px);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .subtitle {
+      max-width: 650px;
+      margin: 0 auto 30px;
+      font-size: 18px;
+      line-height: 1.65;
+      color: #6c4a36;
+    }
+    .price-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #35180b;
+      color: #fff0d5;
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 26px rgba(53, 24, 11, .18);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .price-banner span { color: #ffc64c; }
+    .buttons, .product-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: .2s;
+      border: 0;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .btn.primary { background: #e7a51b; color: #2b1107; }
+    .btn.secondary { border: 2px solid #3a1d0f; color: #3a1d0f; background: transparent; }
+    .btn.dark { background: #35180b; color: #fff0d5; }
+    .btn:hover { transform: translateY(-3px); }
+    section { padding: 72px 20px; max-width: 1120px; margin: auto; }
+    .section-title { font-size: clamp(32px, 5vw, 46px); text-align: center; margin-bottom: 12px; }
+    .section-subtitle { text-align: center; max-width: 680px; margin: 0 auto 38px; color: #6c4a36; line-height: 1.6; }
+    .cards, .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 22px;
+    }
+    .card, .product-card {
+      background: #fff;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 14px 30px rgba(58, 29, 15, .08);
+      text-align: center;
+    }
+    .card h3, .product-card h3 { margin-bottom: 10px; font-size: 22px; }
+    .card p, .product-card p { color: #6c4a36; line-height: 1.5; }
+    .product-card { position: relative; overflow: hidden; }
+    .product-card.sold-out { opacity: .66; }
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      background: #fff3d2;
+      color: #7a4b00;
+    }
+    .badge.out { background: #f0f0f0; color: #7a7a7a; }
+    .foil {
+      width: 92px;
+      height: 76px;
+      margin: 0 auto 18px;
+      border-radius: 18px;
+      transform: rotate(-5deg);
+      box-shadow: inset 0 0 18px rgba(255,255,255,.28), 0 15px 22px rgba(53,24,11,.16);
+      border: 1px solid rgba(255,255,255,.38);
+    }
+    .celeste { background: linear-gradient(145deg, #a7ecff, #39a9d9); }
+    .rojo { background: linear-gradient(145deg, #ff5a5f, #b80716); }
+    .plateado { background: linear-gradient(145deg, #ffffff, #bfc2c7); }
+    .morado { background: linear-gradient(145deg, #b87cff, #6425b8); }
+    .dorado { background: linear-gradient(145deg, #ffe07b, #c68a08); }
+    .naranja { background: linear-gradient(145deg, #ffb347, #e66d00); }
+    .rosado { background: linear-gradient(145deg, #ff9acb, #e33f8e); }
+    .product-actions { margin-top: 18px; }
+    .contact-box {
+      background: #35180b;
+      color: white;
+      border-radius: 36px;
+      padding: 52px 24px;
+      text-align: center;
+    }
+    .contact-box p { color: #f5d9ad; max-width: 650px; margin: 15px auto 25px; line-height: 1.6; }
+    footer { text-align: center; padding: 35px 20px; background: #2b1107; color: #fff0d5; }
+    @media (max-width: 600px) {
+      h1 { letter-spacing: -2px; }
+      .logo-icon { width: 112px; height: 112px; }
+      .product-actions .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <div class="logo-icon"></div>
+      <h1>Choco<span>Boom</span></h1>
+      <p class="tagline">Pequeñas bombas de felicidad</p>
+      <p class="subtitle">Chocotejas artesanales premium, hechas para regalar, compartir y disfrutar en cada mordida.</p>
+      <div class="price-banner"><strong>S/ 2 cada una</strong> <span>|</span> <strong>3 chocotejas por S/ 5</strong></div>
+      <div class="buttons">
+        <a class="btn primary" href="#sabores">Ver sabores</a>
+        <a class="btn secondary" href="https://www.instagram.com/myschocoboom/" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="section-title">¿Por qué elegirnos?</h2>
+    <p class="section-subtitle">Un detalle dulce, llamativo y artesanal, con envolturas platinadas que hacen que cada chocoteja se vea especial.</p>
+    <div class="cards">
+      <div class="card"><h3>Artesanales</h3><p>Preparadas con cuidado, detalle y una presentación especial.</p></div>
+      <div class="card"><h3>Premium</h3><p>Colores llamativos, acabado elegante y sabor irresistible.</p></div>
+      <div class="card"><h3>Para regalar</h3><p>Perfectas para cumpleaños, detalles, antojos y momentos especiales.</p></div>
+    </div>
+  </section>
+
+  <section id="sabores">
+    <h2 class="section-title">Sabores ChocoBoom</h2>
+    <p class="section-subtitle">Elige tu sabor y compra directo por WhatsApp o Instagram con mensaje automático.</p>
+    <div class="products">
+      <article class="product-card">
+        <div class="foil celeste"></div><span class="badge">Disponible</span><h3>Pie de limón</h3><p>Envoltura celeste platinada.</p>
+        <div class="product-actions"><a class="btn primary" target="_blank" href="https://wa.me/51939711138?text=Hola%20ChocoBoom%2C%20quiero%20hacer%20un%20pedido%20de%20chocotejas%20sabor%20Pie%20de%20lim%C3%B3n.%20Precio%3A%20S%2F%202%20c/u%20o%203%20por%20S%2F%205.">WhatsApp</a><a class="btn dark" target="_blank" href="https://www.instagram.com/myschocoboom/">Instagram</a></div>
+      </article>
+      <article class="product-card">
+        <div class="foil rojo"></div><span class="badge">Disponible</span><h3>Almendra</h3><p>Envoltura roja platinada.</p>
+        <div class="product-actions"><a class="btn primary" target="_blank" href="https://wa.me/51939711138?text=Hola%20ChocoBoom%2C%20quiero%20hacer%20un%20pedido%20de%20chocotejas%20sabor%20Almendra.%20Precio%3A%20S%2F%202%20c/u%20o%203%20por%20S%2F%205.">WhatsApp</a><a class="btn dark" target="_blank" href="https://www.instagram.com/myschocoboom/">Instagram</a></div>
+      </article>
+      <article class="product-card">
+        <div class="foil plateado"></div><span class="badge">Disponible</span><h3>Maní</h3><p>Envoltura plateada platinada.</p>
+        <div class="product-actions"><a class="btn primary" target="_blank" href="https://wa.me/51939711138?text=Hola%20ChocoBoom%2C%20quiero%20hacer%20un%20pedido%20de%20chocotejas%20sabor%20Man%C3%AD.%20Precio%3A%20S%2F%202%20c/u%20o%203%20por%20S%2F%205.">WhatsApp</a><a class="btn dark" target="_blank" href="https://www.instagram.com/myschocoboom/">Instagram</a></div>
+      </article>
+      <article class="product-card">
+        <div class="foil dorado"></div><span class="badge">Disponible</span><h3>Pecanas</h3><p>Envoltura dorada platinada.</p>
+        <div class="product-actions"><a class="btn primary" target="_blank" href="https://wa.me/51939711138?text=Hola%20ChocoBoom%2C%20quiero%20hacer%20un%20pedido%20de%20chocotejas%20sabor%20Pecanas.%20Precio%3A%20S%2F%202%20c/u%20o%203%20por%20S%2F%205.">WhatsApp</a><a class="btn dark" target="_blank" href="https://www.instagram.com/myschocoboom/">Instagram</a></div>
+      </article>
+      <article class="product-card sold-out">
+        <div class="foil morado"></div><span class="badge out">Agotado</span><h3>Pasas</h3><p>Envoltura morada platinada.</p>
+      </article>
+      <article class="product-card sold-out">
+        <div class="foil naranja"></div><span class="badge out">Agotado</span><h3>Maracuyá</h3><p>Envoltura naranja platinada.</p>
+      </article>
+      <article class="product-card sold-out">
+        <div class="foil rosado"></div><span class="badge out">Agotado</span><h3>Pie de fresa</h3><p>Envoltura rosada platinada.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="contact-box">
+      <h2>Haz tu pedido fácil</h2>
+      <p>También puedes escribirnos directamente y armar tu cajita con tus sabores favoritos.</p>
+      <div class="buttons">
+        <a class="btn primary" href="https://wa.me/51939711138?text=Hola%20ChocoBoom%2C%20quiero%20hacer%20un%20pedido%20de%20chocotejas.%20Me%20interesa%20la%20promoci%C3%B3n%20de%203%20por%20S%2F%205." target="_blank">WhatsApp 1</a>
+        <a class="btn primary" href="https://wa.me/51939457088?text=Hola%20ChocoBoom%2C%20quiero%20hacer%20un%20pedido%20de%20chocotejas.%20Me%20interesa%20la%20promoci%C3%B3n%20de%203%20por%20S%2F%205." target="_blank">WhatsApp 2</a>
+        <a class="btn secondary" href="https://www.instagram.com/myschocoboom/" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 ChocoBoom — Chocotejas artesanales</p>
+  </footer>
+</body>
+</html>
